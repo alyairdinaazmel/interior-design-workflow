@@ -11,16 +11,14 @@ class TaskCommentsSeeder extends Seeder
     {
         TaskComment::create([
             'task_id' => 1,
-            'user_id' => 2, // Jane Smith
-            'comment' => 'Initial consultation went well. Client is satisfied with the progress.',
-            'created_at' => now(),
+            'user_id' => 2, // Assuming staff user with ID 2
+            'comment' => 'Initial meeting went well.',
         ]);
 
         TaskComment::create([
             'task_id' => 2,
-            'user_id' => 2, // Jane Smith
-            'comment' => 'Design drafts are being developed as per client specifications.',
-            'created_at' => now(),
+            'user_id' => 2,
+            'comment' => 'Design drafts are in progress as per client requirements.',
         ]);
     }
 }

@@ -11,7 +11,7 @@ class UsersSeeder extends Seeder
     public function run()
     {
         // Creating a Managing Director
-        User::firstOrCreate(
+        $director = User::firstOrCreate(
             ['email' => 'director@example.com'],
             [
                 'name' => 'Adam Pauzi',
@@ -21,9 +21,11 @@ class UsersSeeder extends Seeder
                 'specific_role' => 'Managing Director',
             ]
         );
+        //Assign Spatie role:
+        $director->assignRole('Managing Director');
 
         // Creating Staff Users
-        User::firstOrCreate(
+        $staff1 = User::firstOrCreate(
             ['email' => 'designer@example.com'],
             [
                 'name' => 'Siti Sofea',
@@ -33,8 +35,9 @@ class UsersSeeder extends Seeder
                 'specific_role' => 'Designer',
             ]
         );
+        $staff1->assignRole('Staff');
 
-        User::firstOrCreate(
+        $staff2 = User::firstOrCreate(
             ['email' => 'sales@example.com'],
             [
                 'name' => 'Siti Khodijah',
@@ -44,5 +47,6 @@ class UsersSeeder extends Seeder
                 'specific_role' => 'Sales Manager',
             ]
         );
+        $staff2->assignRole('Staff');
     }
 }

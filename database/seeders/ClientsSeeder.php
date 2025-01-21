@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Client; // Ensure this line exists
+use App\Models\Client;
 
 class ClientsSeeder extends Seeder
 {
@@ -15,7 +15,7 @@ class ClientsSeeder extends Seeder
             'phone' => '123-456-7890',
             'affiliation' => 'Acme Industries',
             'other_details' => 'Leading provider of industrial widgets',
-            'created_by' => 1, // Adjust this value as needed
+            'created_by' => 1, // Assuming user with ID 1 (Managing Director)
         ]);
 
         Client::create([

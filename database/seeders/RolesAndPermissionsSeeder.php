@@ -3,21 +3,20 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Role;
+use Spatie\Permission\Models\Role;
 
 class RolesAndPermissionsSeeder extends Seeder
 {
     public function run()
     {
-        // Create roles without 'guard_name'
+        // Create roles using Spatie's Role model.
+        // Only insert 'name' and 'guard_name' as these are the columns present.
         Role::firstOrCreate(
-            ['name' => 'Managing Director'],
-            ['description' => 'Manages the entire system']
+            ['name' => 'Managing Director', 'guard_name' => 'web']
         );
 
         Role::firstOrCreate(
-            ['name' => 'Staff'],
-            ['description' => 'Handles daily tasks and projects']
+            ['name' => 'Staff', 'guard_name' => 'web']
         );
     }
 }

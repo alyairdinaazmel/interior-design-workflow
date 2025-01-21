@@ -11,18 +11,18 @@ class WorkflowLogsSeeder extends Seeder
     {
         WorkflowLog::create([
             'workflow_instance_id' => 1,
-            'stage_id' => 1, // Initial Consultation
-            'action' => 'Stage Completed',
-            'comments' => 'Initial consultation with client completed successfully.',
-            'timestamp' => now(),
+            'stage_id'             => 1, // Assuming stage 1 is "Initial Consultation"
+            'action'               => 'Stage Completed',
+            'comments'             => 'Initial consultation completed successfully.',
+            'timestamp'            => now(),
         ]);
 
         WorkflowLog::create([
             'workflow_instance_id' => 1,
-            'stage_id' => 2, // Design Drafting
-            'action' => 'Stage Started',
-            'comments' => 'Design drafting has begun.',
-            'timestamp' => now(),
+            'stage_id'             => 2, // "Design Drafting"
+            'action'               => 'Stage Started',
+            'comments'             => 'Design drafting has begun.',
+            'timestamp'            => now(),
         ]);
     }
 }

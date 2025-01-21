@@ -15,7 +15,7 @@ class WorkflowTemplate extends Model
     ];
 
     // A workflow template has many workflow stages
-    public function workflowStages()
+    public function stages()
     {
         return $this->hasMany(WorkflowStage::class);
     }

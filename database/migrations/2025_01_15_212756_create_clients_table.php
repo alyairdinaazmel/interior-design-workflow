@@ -12,9 +12,9 @@ return new class extends Migration {
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
-            $table->string('affiliation')->nullable(); // E.g., Company name or affiliation details
-            $table->text('other_details')->nullable(); // Optional additional details
-            $table->unsignedBigInteger('created_by'); // FK: ID of the User who created the client
+            $table->string('affiliation')->nullable(); // e.g., Company name or affiliation details
+            $table->text('other_details')->nullable();   // Optional: additional details
+            $table->unsignedBigInteger('created_by');     // FK to the user who created the client
             $table->timestamps();
         });
     }
