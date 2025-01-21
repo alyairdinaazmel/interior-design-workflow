@@ -20,4 +20,9 @@ class WorkflowStage extends Model
     {
         return $this->belongsTo(WorkflowTemplate::class);
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
 }

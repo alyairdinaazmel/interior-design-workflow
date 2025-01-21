@@ -18,6 +18,7 @@ use Filament\Resources\Table;
 class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
+
     protected static ?string $navigationIcon = 'heroicon-o-collection';
 
     public static function form(Form $form): Form
@@ -25,7 +26,8 @@ class ProjectResource extends Resource
         return $form->schema([
             TextInput::make('name')
                 ->required()
-                ->maxLength(255),
+                ->maxLength(255)
+                ->label('Project Name'),
             Select::make('client_id')
                 ->label('Client')
                 ->relationship('client', 'name')
@@ -37,6 +39,11 @@ class ProjectResource extends Resource
                 ->required(),
             DatePicker::make('end_date')
                 ->nullable(),
+            //Dropdown to select Workflow Template
+            Select::make('workflow_template_id')
+                ->label('Workflow Template')
+                ->relationship('workflowTemplate', 'name')
+                ->required(),
             Select::make('status')
                 ->options([
                     'Not Started' => 'Not Started',
@@ -72,7 +79,7 @@ class ProjectResource extends Resource
     public static function getRelations(): array
     {
         return [
-            // Define relationships or relation managers if needed.
+            // Define relationship managers if needed.
         ];
     }
 

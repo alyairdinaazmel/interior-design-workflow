@@ -36,4 +36,10 @@ class Project extends Model
     {
         return $this->hasMany(Task::class);
     }
+
+    public function workflowTemplate()
+{
+    return $this->belongsTo(WorkflowTemplate::class);
+}
+
 }

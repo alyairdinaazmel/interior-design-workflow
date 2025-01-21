@@ -3,55 +3,81 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\WorkflowTemplateResource\Pages;
-use App\Filament\Resources\WorkflowTemplateResource\RelationManagers;
 use App\Models\WorkflowTemplate;
-use Filament\Forms;
-use Filament\Resources\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Forms;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class WorkflowTemplateResource extends Resource
 {
     protected static ?string $model = WorkflowTemplate::class;
 
-    // Set a custom icon for Templates if you like:
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static ?string $navigationLabel = 'Templates';
 
-    // Override the navigation label
-    public static function getNavigationLabel(): string
-    {
-        return 'Templates';
-    }
+    protected static ?string $navigationIcon = 'heroicon-o-template';
 
-    public static function form(Form $form): Form
+    public static function form(Forms\Form $form): Forms\Form
     {
         return $form->schema([
-            // Define form fields, for example:
-            \Filament\Forms\Components\TextInput::make('name')->required(),
-            \Filament\Forms\Components\Textarea::make('description')->required(),
-            // You might also want a repeater for WorkflowStages, etc.
+            Forms\Components\TextInput::make('name')
+                ->required()
+                ->label('Template Name'),
+            Forms\Components\Textarea::make('description')
+                ->label('Template Description'),
+            Forms\Components\Repeater::make('stages')
+                ->relationship('stages') // Define the stages relationship
+                ->label('Stages')
+                ->schema([
+                    Forms\Components\TextInput::make('name')
+                        ->required()
+                        ->label('Stage Name'),
+                    Forms\Components\TextInput::make('order')
+                        ->required()
+                        ->numeric()
+                        ->label('Stage Order'),
+                    Forms\Components\Repeater::make('tasks')
+                        ->relationship('tasks') // Define the tasks relationship
+                        ->label('Tasks')
+                        ->schema([
+                            Forms\Components\TextInput::make('title')
+                                ->required()
+                                ->label('Task Title'),
+                            Forms\Components\Textarea::make('description')
+                                ->label('Task Description'),
+                            Forms\Components\DatePicker::make('start_date')
+                                ->label('Start Date'),
+                            Forms\Components\DatePicker::make('deadline')
+                                ->label('Deadline'),
+                        ])
+                        ->createItemButtonLabel('Add Task')
+                        ->collapsible(),
+                ])
+                ->createItemButtonLabel('Add Stage')
+                ->collapsible(),
         ]);
     }
 
-    public static function table(Table $table): Table
+    public static function table(Tables\Table $table): Tables\Table
     {
         return $table->columns([
-            \Filament\Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
-            \Filament\Tables\Columns\TextColumn::make('description')->limit(50),
+            Tables\Columns\TextColumn::make('name')
+                ->sortable()
+                ->searchable()
+                ->label('Template Name'),
+            Tables\Columns\TextColumn::make('description')
+                ->limit(50)
+                ->label('Description'),
         ])->actions([
-            \Filament\Tables\Actions\EditAction::make(),
+            Tables\Actions\EditAction::make(),
         ]);
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => \App\Filament\Resources\WorkflowTemplateResource\Pages\ListWorkflowTemplates::route('/'),
-            'create' => \App\Filament\Resources\WorkflowTemplateResource\Pages\CreateWorkflowTemplate::route('/create'),
-            'edit' => \App\Filament\Resources\WorkflowTemplateResource\Pages\EditWorkflowTemplate::route('/{record}/edit'),
+            'index' => Pages\ListWorkflowTemplates::route('/'),
+            'create' => Pages\CreateWorkflowTemplate::route('/create'),
+            'edit' => Pages\EditWorkflowTemplate::route('/{record}/edit'),
         ];
     }
 }

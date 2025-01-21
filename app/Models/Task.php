@@ -25,6 +25,12 @@ class Task extends Model
         return $this->belongsTo(WorkflowInstance::class);
     }
 
+    // Each task belongs to a workflow stage
+    public function stage()
+    {
+        return $this->belongsTo(WorkflowStage::class);
+    }
+
     // Task is assigned to a user
     public function assignedUser()
     {
