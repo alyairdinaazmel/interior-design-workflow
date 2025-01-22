@@ -11,10 +11,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolesAndPermissionsSeeder::class,
             UsersSeeder::class,
+            WorkflowTemplatesSeeder::class,  // Run template seeder first
+            WorkflowStagesSeeder::class,     // And stages seeder, if needed
             ClientsSeeder::class,
-            ProjectsSeeder::class,
-            WorkflowTemplatesSeeder::class,
-            WorkflowStagesSeeder::class,
+            ProjectsSeeder::class,           // Now projects can reference an existing template
             WorkflowInstancesSeeder::class,
             WorkflowLogsSeeder::class,
             TasksSeeder::class,
