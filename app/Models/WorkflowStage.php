@@ -25,4 +25,10 @@ class WorkflowStage extends Model
     {
         return $this->hasMany(Task::class, 'workflow_stage_id');
     }
+
+    public function templateTasks()
+{
+    return $this->hasMany(WorkflowTemplateTask::class, 'workflow_stage_id');
+}
+
 }

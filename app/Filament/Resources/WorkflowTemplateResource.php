@@ -4,12 +4,14 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\WorkflowTemplateResource\Pages;
 use App\Models\WorkflowTemplate;
-use Filament\Resources\Resource;
-use Filament\Resources\Form;
-use Filament\Resources\Table;
+use Filament\Forms;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Repeater;
+use Filament\Resources\Form;
+use Filament\Resources\Resource;
+use Filament\Resources\Table;
+use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 
 class WorkflowTemplateResource extends Resource
@@ -30,28 +32,26 @@ class WorkflowTemplateResource extends Resource
                 ->label('Template Description')
                 ->required(),
             Repeater::make('stages')
-                ->relationship('stages') // Ensure WorkflowTemplate model has a 'stages' relationship defined
+                ->relationship('stages') // Ensure WorkflowTemplate model has a 'stages' relationship
                 ->label('Stages')
                 ->schema([
                     TextInput::make('name')
                         ->required()
                         ->label('Stage Name'),
                     TextInput::make('order')
-                        ->label('Order')
                         ->numeric()
-                        ->required(),
-                    Repeater::make('tasks')
-                        ->relationship('tasks') // Ensure WorkflowStage model has a 'tasks' relationship defined
+                        ->required()
+                        ->label('Order'),
+                    Repeater::make('tasks') // Nested repeater for tasks
+                        ->relationship('tasks') // Ensure WorkflowTemplateStage model has a 'tasks' relationship
                         ->label('Tasks')
                         ->schema([
                             TextInput::make('title')
                                 ->required()
                                 ->label('Task Title'),
                             Textarea::make('description')
+                                ->nullable()
                                 ->label('Task Description'),
-                            // You can also add DatePickers for start_date and deadline if needed:
-                            // \Filament\Forms\Components\DatePicker::make('start_date')->label('Start Date'),
-                            // \Filament\Forms\Components\DatePicker::make('deadline')->label('Deadline'),
                         ])
                         ->createItemButtonLabel('Add Task')
                         ->collapsible(),
@@ -59,7 +59,7 @@ class WorkflowTemplateResource extends Resource
                 ->createItemButtonLabel('Add Stage')
                 ->collapsible(),
         ]);
-    }
+    }    
 
     public static function table(Table $table): Table
     {
@@ -72,20 +72,24 @@ class WorkflowTemplateResource extends Resource
                 ->limit(50)
                 ->label('Description'),
             TextColumn::make('stages_count')
-                ->label('Stages')
-                ->counts('stages'),
+                ->label('Stages Count')
+                ->counts('stages'), // Counts the number of related stages
+            TextColumn::make('tasks_count')
+                ->label('Total Tasks')
+                ->counts('stages.tasks'), // Nested count to calculate total tasks across stages
         ])->actions([
-            \Filament\Tables\Actions\EditAction::make(),
-            \Filament\Tables\Actions\DeleteAction::make(),
+            Tables\Actions\EditAction::make(),
+            Tables\Actions\DeleteAction::make(),
         ])->bulkActions([
-            \Filament\Tables\Actions\DeleteBulkAction::make(),
+            Tables\Actions\DeleteBulkAction::make(),
         ]);
     }
+    
 
     public static function getRelations(): array
     {
         return [
-            // You can add relation managers here if needed.
+            // Add relation managers if needed
         ];
     }
 
