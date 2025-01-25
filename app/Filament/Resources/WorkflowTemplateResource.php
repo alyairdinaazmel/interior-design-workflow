@@ -73,17 +73,17 @@ class WorkflowTemplateResource extends Resource
                 ->label('Description'),
             TextColumn::make('stages_count')
                 ->label('Stages Count')
-                ->counts('stages'), // Counts the number of related stages
+                ->counts('stages'), // Counts the number of stages
             TextColumn::make('tasks_count')
                 ->label('Total Tasks')
-                ->counts('stages.tasks'), // Nested count to calculate total tasks across stages
+                ->counts('tasks'), // Counts tasks across all stages
         ])->actions([
             Tables\Actions\EditAction::make(),
             Tables\Actions\DeleteAction::make(),
         ])->bulkActions([
             Tables\Actions\DeleteBulkAction::make(),
         ]);
-    }
+    }    
     
 
     public static function getRelations(): array
