@@ -49,7 +49,7 @@ class ProjectResource extends Resource
                             ->unique(ignoreRecord: true)
                             ->maxLength(255),
                     ])
-                    ->saveOptionUsing(function ($state, $record) {
+                    ->createOptionUsing(function ($state, $record) {
                         return ProjectType::create(['name' => $state])->id;
                     }),
                 Select::make('workflow_template_id')
