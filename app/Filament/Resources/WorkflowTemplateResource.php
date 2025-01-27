@@ -108,8 +108,8 @@ class WorkflowTemplateResource extends Resource
         ];
     }
 
-    public static function getNavigationLabel(): string
-    {
-        return 'Templates';
-    }
+    //public static function getNavigationLabel(): string
+    //{
+    //    return 'Templates';
+    //}
 }
