@@ -26,16 +26,17 @@ class WorkflowTemplate extends Model
         return $this->hasMany(WorkflowInstance::class);
     }
 
-    // Define a computed relationship to count tasks across all stages
+    // Define a hasManyThrough relationship to count tasks across all stages
     public function tasks()
     {
         return $this->hasManyThrough(
             WorkflowTemplateTask::class, // Target model
             WorkflowTemplateStage::class, // Intermediate model
-            'workflow_template_id', // Foreign key on WorkflowStage
-            'workflow_stage_id',   // Foreign key on TemplateTask
+            'workflow_template_id', // Foreign key on WorkflowTemplateStage
+            'workflow_template_stage_id',   // Foreign key on WorkflowTemplateTask
             'id',                  // Local key on WorkflowTemplate
-            'id'                   // Local key on WorkflowStage
+            'id'                   // Local key on WorkflowTemplateStage
         );
     }
 }
+

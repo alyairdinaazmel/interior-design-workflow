@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Illuminate\Database\Eloquent\Builder;
 
 class WorkflowTemplateResource extends Resource
 {
@@ -21,6 +22,13 @@ class WorkflowTemplateResource extends Resource
     protected static ?string $navigationLabel = 'Templates';
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    // Override the default query to include counts
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->withCount(['stages', 'tasks']);
+    }
 
     public static function form(Form $form): Form
     {
@@ -32,7 +40,7 @@ class WorkflowTemplateResource extends Resource
                 ->label('Template Description')
                 ->required(),
             Repeater::make('stages')
-                ->relationship('stages') // Ensure WorkflowTemplate model has a 'stages' relationship
+                ->relationship('stages') // Ensure WorkflowTemplate has 'stages' relationship
                 ->label('Stages')
                 ->schema([
                     TextInput::make('name')
@@ -43,7 +51,7 @@ class WorkflowTemplateResource extends Resource
                         ->required()
                         ->label('Order'),
                     Repeater::make('tasks') // Nested repeater for tasks
-                        ->relationship('tasks') // Ensure WorkflowTemplateStage model has a 'tasks' relationship
+                        ->relationship('tasks') // Ensure WorkflowTemplateStage has 'tasks' relationship
                         ->label('Tasks')
                         ->schema([
                             TextInput::make('title')
@@ -73,10 +81,10 @@ class WorkflowTemplateResource extends Resource
                 ->label('Description'),
             TextColumn::make('stages_count')
                 ->label('Stages Count')
-                ->counts('stages'), // Counts the number of stages
+                ->sortable(),
             TextColumn::make('tasks_count')
                 ->label('Total Tasks')
-                ->counts('tasks'), // Counts tasks across all stages
+                ->sortable(),
         ])->actions([
             Tables\Actions\EditAction::make(),
             Tables\Actions\DeleteAction::make(),
@@ -84,7 +92,6 @@ class WorkflowTemplateResource extends Resource
             Tables\Actions\DeleteBulkAction::make(),
         ]);
     }    
-    
 
     public static function getRelations(): array
     {
@@ -101,4 +108,10 @@ class WorkflowTemplateResource extends Resource
             'edit' => Pages\EditWorkflowTemplate::route('/{record}/edit'),
         ];
     }
+
+    public static function getNavigationLabel(): string
+    {
+        return 'Workflows';
+    }
 }
+
