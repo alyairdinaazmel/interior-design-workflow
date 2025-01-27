@@ -1,4 +1,4 @@
-// app/Models/ProjectType.php
+<?php
 
 namespace App\Models;
 
