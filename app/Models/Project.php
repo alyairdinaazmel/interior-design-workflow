@@ -43,13 +43,13 @@ class Project extends Model
     // Get the workflow template associated with the project
     public function workflowTemplate()
     {
-        return $this->belongsTo(WorkflowTemplate::class, workflow_template_id);
+        return $this->belongsTo(WorkflowTemplate::class, 'workflow_template_id');
     }
 
     // Each project belongs to a project type
     public function projectType()
     {
-        return $this->belongsTo(ProjectType::class);
+        return $this->belongsTo(ProjectType::class, 'project_type_id');
     }
 
 }
