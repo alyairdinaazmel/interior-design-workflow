@@ -23,7 +23,6 @@ class WorkflowTemplateResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    // Override the default query to include counts
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
@@ -111,7 +110,6 @@ class WorkflowTemplateResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return 'Workflows';
+        return 'Templates';
     }
 }
-
