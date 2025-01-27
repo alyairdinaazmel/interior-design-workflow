@@ -13,10 +13,13 @@ class Project extends Model
         'name',
         'client_id',
         'budget',
+        'workflow_template_id',
         'start_date',
         'end_date',
         'status',
         'project_description',
+        'project_type_id',
+        // Add other fillable fields as necessary
     ];
 
     // Each project belongs to one client
@@ -37,9 +40,16 @@ class Project extends Model
         return $this->hasMany(Task::class);
     }
 
+    // Get the workflow template associated with the project
     public function workflowTemplate()
-{
-    return $this->belongsTo(WorkflowTemplate::class);
-}
+    {
+        return $this->belongsTo(WorkflowTemplate::class, workflow_template_id);
+    }
+
+    // Each project belongs to a project type
+    public function projectType()
+    {
+        return $this->belongsTo(ProjectType::class);
+    }
 
 }
