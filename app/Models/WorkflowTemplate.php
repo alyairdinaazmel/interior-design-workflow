@@ -30,8 +30,8 @@ class WorkflowTemplate extends Model
     public function tasks()
     {
         return $this->hasManyThrough(
-            TemplateTask::class, // Target model
-            WorkflowStage::class, // Intermediate model
+            WorkflowTemplateTask::class, // Target model
+            WorkflowTemplateStage::class, // Intermediate model
             'workflow_template_id', // Foreign key on WorkflowStage
             'workflow_stage_id',   // Foreign key on TemplateTask
             'id',                  // Local key on WorkflowTemplate
