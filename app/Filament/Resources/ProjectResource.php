@@ -125,7 +125,8 @@ class ProjectResource extends Resource
                             ->required()
                             ->label('Budget')
                             ->prefix('RM')
-                            ->minValue(0),
+                            ->minValue(0)
+                            ->helperText('Enter the budget in Malaysian Ringgit (RM).'),
 
                         // Start Date Picker
                         DatePicker::make('start_date')
