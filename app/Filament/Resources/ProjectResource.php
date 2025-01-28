@@ -63,7 +63,7 @@ class ProjectResource extends Resource
                                     ->maxLength(20),
                                 // Add other necessary client fields here
                             ])
-                            ->saveOptionUsing(function ($state, $record) {
+                            ->createOptionUsing(function ($state, $record) {
                                 return Client::create([
                                     'name' => $state['name'],
                                     'email' => $state['email'],
@@ -87,7 +87,7 @@ class ProjectResource extends Resource
                                     ->unique(ignoreRecord: true)
                                     ->maxLength(255),
                             ])
-                            ->saveOptionUsing(function ($state, $record) {
+                            ->createOptionUsing(function ($state, $record) {
                                 return ProjectType::create(['name' => $state['name']])->id;
                             }),
 
@@ -111,7 +111,7 @@ class ProjectResource extends Resource
                                     ->maxLength(1000),
                                 // Add other necessary workflow template fields here
                             ])
-                            ->saveOptionUsing(function ($state, $record) {
+                            ->createOptionUsing(function ($state, $record) {
                                 return WorkflowTemplate::create([
                                     'name' => $state['name'],
                                     'description' => $state['description'],
@@ -138,7 +138,8 @@ class ProjectResource extends Resource
                         DatePicker::make('end_date')
                             ->label('End Date')
                             ->afterOrEqual('start_date')
-                            ->nullable(), // Make end_date optional
+                            ->nullable()
+                            ->helperText('Leave blank to set upon workflow completion.'),
 
                         // Status Select
                         Select::make('status')
