@@ -14,6 +14,14 @@ class WorkflowTemplate extends Model
         'description',
     ];
 
+    /**
+     * Get the projects associated with the workflow template.
+     */
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
     // A workflow template has many workflow stages
     public function stages()
     {
